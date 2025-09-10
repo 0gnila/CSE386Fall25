@@ -114,6 +114,19 @@ int main(int argc, char* argv[]) {\
     cout << directionInRadians(2,10,3,11) << endl;
     cout << directionInRadians(2,2,2,0) << endl;
     
+    cout << "Map" << endl;
+    cout << map(2, 0, 5, 10, 11) << endl;
+    
+    cout << "quadratic" << endl;
+    cout << quadratic(1,4,3) << endl;
+    cout << quadratic(1,0,0) << endl;
+    cout << quadratic(-4,-2,-1) << endl;
+    
+    double ary [2];
+    cout << "quadratic2" << endl;
+    int n = quadratic(1, 4, 3, ary);
+    cout << n << endl;
+    cout << ary[0] << "," << ary[1] << endl;
     return 0;
 	frameBuffer.setClearColor(paleGreen);
 	initGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, username.c_str(), render, nullptr, keyboardUtility, nullptr);

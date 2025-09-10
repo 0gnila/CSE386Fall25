@@ -382,8 +382,11 @@ double directionInRadians(double x1, double y1, double x2,  double y2) {
  */
 
 double map(double x, double fromLo, double fromHi, double toLow, double toHigh) {
-	/* CSE 386 - todo  */
-	return 0;
+    if (fromHi == fromLo) {
+            throw std::invalid_argument("map(): fromLo and fromHi cannot be equal");
+        }
+        double percent = (x - fromLo) / (fromHi - fromLo);
+        return percent * (toHigh - toLow) + toLow;
 }
 
 /**
@@ -403,11 +406,32 @@ double map(double x, double fromLo, double fromHi, double toLow, double toHigh) 
  */
 
 vector<double> quadratic(double A, double B, double C) {
-	/* CSE 386 - todo  */
-	vector<double> result;	// put only the roots in here
-	result.push_back(0);
-	result.push_back(1);
-	return result;
+    vector<double> result;
+
+    if (A == 0) {
+        if (B != 0) {
+            result.push_back(-C / B);
+        }
+        return result;
+    }
+
+    double discriminant = glm::pow(B, 2.0) - 4 * A * C;
+
+    if (discriminant < 0) {
+        return result;
+    }
+    else if (discriminant == 0) {
+        result.push_back(-B / (2 * A));
+    }
+    else {
+        double root1 = (-B + sqrt(discriminant)) / (2 * A);
+        double root2 = (-B - sqrt(discriminant)) / (2 * A);
+        result.push_back(root1);
+        result.push_back(root2);
+        sort(result.begin(), result.end());  // ascending order
+    }
+
+    return result;
 }
 
 /**
@@ -444,10 +468,37 @@ vector<double> quadratic(double A, double B, double C) {
 
 int quadratic(double A, double B, double C, double roots[2]) {
 	/* CSE 386 - todo  */
-	int rootCnt = 0;
-	roots[0] = 1;
-	roots[1] = 2;
-	return 2;
+    if (A == 0) {
+            if (B == 0) {
+                return 0;
+            } else {
+                roots[0] = -C / B;
+                return 1;
+            }
+        }
+        double discriminant = glm::pow(B, 2.0) - 4.0 * A * C;
+
+        if (discriminant < 0.0) {
+            return 0;
+        }
+        else if (discriminant == 0.0) {
+            roots[0] = -B / (2.0 * A);
+            return 1;
+        }
+        else {
+            double sqrtDisc = glm::sqrt(discriminant);
+            double r1 = (-B - sqrtDisc) / (2.0 * A);
+            double r2 = (-B + sqrtDisc) / (2.0 * A);
+
+            if (r1 < r2) {
+                roots[0] = r1;
+                roots[1] = r2;
+            } else {
+                roots[0] = r2;
+                roots[1] = r1;
+            }
+            return 2;
+        }
 }
 
 /**
