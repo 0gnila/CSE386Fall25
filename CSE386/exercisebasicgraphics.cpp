@@ -114,6 +114,61 @@ int main(int argc, char* argv[]) {\
     cout << directionInRadians(2,10,3,11) << endl;
     cout << directionInRadians(2,2,2,0) << endl;
     
+    cout << "Map" << endl;
+    cout << map(2, 0, 5, 10, 11) << endl;
+    
+    cout << "quadratic" << endl;
+    cout << quadratic(1,4,3) << endl;
+    cout << quadratic(1,0,0) << endl;
+    cout << quadratic(-4,-2,-1) << endl;
+    
+    double ary [2];
+    cout << "quadratic2" << endl;
+    int n = quadratic(1, 4, 3, ary);
+    cout << n << endl;
+    cout << ary[0] << "," << ary[1] << endl;
+    
+    cout << "double it" << endl;
+    cout << doubleIt(dvec2(1.0, 2.0)) << endl;
+    cout << doubleIt(dvec2(-5.0, 0.0)) << endl;
+    cout << doubleIt(dvec2(10.5, -2.5)) << endl;
+    
+    cout << "Normalize" << endl;
+    cout << myNormalize(dvec3(3.0, 4.0, 0.0))<< endl;
+    cout << myNormalize(dvec3(1.0, 1.0, 1.0))<< endl;
+    cout << myNormalize(dvec3(-2.0, 0.0, 0.0))<< endl;
+
+    cout << "Orthogonal" << endl;
+    cout << isOrthogonal(dvec3(1.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0))<< endl;
+    cout << isOrthogonal(dvec3(1.0, 1.0, 0.0), dvec3(1.0, -1.0, 0.0))<< endl;
+    cout << isOrthogonal(dvec3(1.0, 2.0, 3.0), dvec3(1.0, 1.0, 1.0))<< endl;
+    cout << isOrthogonal(dvec3(1.0, 1.0, 0.0), dvec3(1.0, -1.0, 0.0))<< endl;
+
+    cout << "Acute Angle" << endl;
+    cout << formAcuteAngle(dvec3(1.0, 0.0, 0.0), dvec3(1.0, 1.0, 0.0)) << endl;
+    cout << formAcuteAngle(dvec3(1.0, 0.0, 0.0), dvec3(-1.0, 1.0, 0.0)) << endl;
+    cout << formAcuteAngle(dvec3(1.0, 1.0, 1.0), dvec3(1.0, 1.0, -2.0)) << endl;
+    
+    cout << "cosBetween" << endl;
+    cout << cosBetween(dvec2(-1.0, 0.0), dvec2(1.0, 0.0)) << endl;
+    cout << cosBetween(dvec3(1.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0)) << endl;
+    cout << cosBetween(dvec4(1.0, 1.0, 0.0, 0.0), dvec4(0.0, 1.0, 0.0, 0.0)) << endl;
+    
+    cout << "area of parrelogram" << endl;
+    cout << areaOfParallelogram(dvec3(1.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0)) << endl;
+    cout << areaOfParallelogram(dvec3(2.0, 0.0, 0.0), dvec3(0.0, 3.0, 0.0)) << endl;
+    cout << areaOfParallelogram(dvec3(1.0, 1.0, 0.0), dvec3(0.0, 1.0, 0.0)) << endl;
+    
+    cout << "area of triangle" << endl;
+    cout << areaOfTriangle(dvec3(0.0, 0.0, 0.0), dvec3(1.0, 0.0, 0.0), dvec3(0.0, 1.0, 0.0)) << endl;
+    cout << areaOfTriangle(dvec3(0.0, 0.0, 0.0), dvec3(2.0, 0.0, 0.0), dvec3(0.0, 3.0, 0.0)) << endl;
+    cout << areaOfTriangle(dvec3(1.0, 1.0, 1.0), dvec3(2.0, 1.0, 1.0), dvec3(1.0, 2.0, 1.0)) << endl;
+    
+    cout << "point vector" << endl;
+    cout << pointingVector(dvec3(1.0, 0.0, 0.0), dvec3(2.0, 0.0, 0.0)) << endl;
+    cout << pointingVector(dvec3(1.0, 1.0, 1.0), dvec3(2.0, 2.0, 2.0)) << endl;
+    cout << pointingVector(dvec3(0.0, 0.0, 0.0), dvec3(-1.0, 0.0, 0.0)) << endl;
+    
     return 0;
 	frameBuffer.setClearColor(paleGreen);
 	initGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, username.c_str(), render, nullptr, keyboardUtility, nullptr);

@@ -382,8 +382,11 @@ double directionInRadians(double x1, double y1, double x2,  double y2) {
  */
 
 double map(double x, double fromLo, double fromHi, double toLow, double toHigh) {
-	/* CSE 386 - todo  */
-	return 0;
+    if (fromHi == fromLo) {
+            throw std::invalid_argument("map(): fromLo and fromHi cannot be equal");
+        }
+        double percent = (x - fromLo) / (fromHi - fromLo);
+        return percent * (toHigh - toLow) + toLow;
 }
 
 /**
@@ -403,11 +406,32 @@ double map(double x, double fromLo, double fromHi, double toLow, double toHigh) 
  */
 
 vector<double> quadratic(double A, double B, double C) {
-	/* CSE 386 - todo  */
-	vector<double> result;	// put only the roots in here
-	result.push_back(0);
-	result.push_back(1);
-	return result;
+    vector<double> result;
+
+    if (A == 0) {
+        if (B != 0) {
+            result.push_back(-C / B);
+        }
+        return result;
+    }
+
+    double discriminant = glm::pow(B, 2.0) - 4 * A * C;
+
+    if (discriminant < 0) {
+        return result;
+    }
+    else if (discriminant == 0) {
+        result.push_back(-B / (2 * A));
+    }
+    else {
+        double root1 = (-B + sqrt(discriminant)) / (2 * A);
+        double root2 = (-B - sqrt(discriminant)) / (2 * A);
+        result.push_back(root1);
+        result.push_back(root2);
+        sort(result.begin(), result.end());  // ascending order
+    }
+
+    return result;
 }
 
 /**
@@ -444,10 +468,37 @@ vector<double> quadratic(double A, double B, double C) {
 
 int quadratic(double A, double B, double C, double roots[2]) {
 	/* CSE 386 - todo  */
-	int rootCnt = 0;
-	roots[0] = 1;
-	roots[1] = 2;
-	return 2;
+    if (A == 0) {
+            if (B == 0) {
+                return 0;
+            } else {
+                roots[0] = -C / B;
+                return 1;
+            }
+        }
+        double discriminant = glm::pow(B, 2.0) - 4.0 * A * C;
+
+        if (discriminant < 0.0) {
+            return 0;
+        }
+        else if (discriminant == 0.0) {
+            roots[0] = -B / (2.0 * A);
+            return 1;
+        }
+        else {
+            double sqrtDisc = glm::sqrt(discriminant);
+            double r1 = (-B - sqrtDisc) / (2.0 * A);
+            double r2 = (-B + sqrtDisc) / (2.0 * A);
+
+            if (r1 < r2) {
+                roots[0] = r1;
+                roots[1] = r2;
+            } else {
+                roots[0] = r2;
+                roots[1] = r1;
+            }
+            return 2;
+        }
 }
 
 /**
@@ -459,7 +510,8 @@ int quadratic(double A, double B, double C, double roots[2]) {
 
 dvec2 doubleIt(const dvec2& V) {
 	/* CSE 386 - todo  */
-	return dvec2(0, 0);
+    dvec2 doubleV = V * 2.0;
+	return doubleV;
 }
 
 /**
@@ -473,7 +525,8 @@ dvec2 doubleIt(const dvec2& V) {
 
 dvec3 myNormalize(const dvec3& V) {
 	/* CSE 386 - todo  */
-	return V;
+    dvec3 normalizedV = glm::normalize(V);
+	return normalizedV;
 }
 
 /**
@@ -488,7 +541,11 @@ two vectors is approximatelyZero().
 
 bool isOrthogonal(const dvec3& a, const dvec3& b) {
 	/* CSE 386 - todo  */
-	return false;
+    double dot = glm::dot(a,b);
+    if (dot == 0) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -501,7 +558,11 @@ bool isOrthogonal(const dvec3& a, const dvec3& b) {
 */
 
 bool formAcuteAngle(const dvec3& a, const dvec3& b) {
-	return false; 0;
+    double dot = glm::dot(a,b);
+    if (dot > 0) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -518,7 +579,10 @@ bool formAcuteAngle(const dvec3& a, const dvec3& b) {
 
 double cosBetween(const dvec2& v1, const dvec2& v2) {
 	/* CSE 386 - todo  */
-	return 0;
+    double dot = glm::dot(v1,v2);
+    double mag1 = glm::length(v1);
+    double mag2 = glm::length(v2);
+    return dot/(mag1 * mag2);
 }
 
 /**
@@ -531,7 +595,10 @@ double cosBetween(const dvec2& v1, const dvec2& v2) {
 
 double cosBetween(const dvec3& v1, const dvec3& v2) {
 	/* CSE 386 - todo  */
-	return 0;
+    double dot = glm::dot(v1,v2);
+    double mag1 = glm::length(v1);
+    double mag2 = glm::length(v2);
+    return dot/(mag1 * mag2);
 }
 
 /**
@@ -544,8 +611,11 @@ double cosBetween(const dvec3& v1, const dvec3& v2) {
 
 double cosBetween(const dvec4& v1, const dvec4& v2) {
 	/* CSE 386 - todo  */
-	double cos = glm::dot(v1, v2) / (glm::length(v1) * glm::length(v2));
-	return 0;
+    double dot = glm::dot(v1,v2);
+    double mag1 = glm::length(v1);
+    double mag2 = glm::length(v2);
+    return dot/(mag1 * mag2);
+
 }
 
 /**
@@ -561,7 +631,9 @@ double cosBetween(const dvec4& v1, const dvec4& v2) {
 
 double areaOfParallelogram(const dvec3& v1, const dvec3& v2) {
 	/* CSE 386 - todo  */
-	return 0;
+    dvec3 crossProduct = glm::cross(v1,v2);
+    double length = glm::length(crossProduct);
+    return length;
 }
 
 /**
@@ -577,8 +649,11 @@ double areaOfParallelogram(const dvec3& v1, const dvec3& v2) {
  */
 
 double areaOfTriangle(const dvec3& pt1, const dvec3& pt2, const dvec3& pt3) {
-	/* CSE 386 - todo  */
-	return 0;
+    /* CSE 386 - todo  */
+    dvec3 u = pt2 - pt1;
+    dvec3 v = pt3 - pt1;
+    double tri_area = glm::length(glm::cross(u, v));
+    return tri_area * 0.5;
 }
 
 /**
@@ -591,7 +666,8 @@ double areaOfTriangle(const dvec3& pt1, const dvec3& pt2, const dvec3& pt3) {
 
 dvec3 pointingVector(const dvec3& pt1, const dvec3& pt2) {
 	/* CSE 386 - todo  */
-	return dvec3(0, 0, 0);
+    dvec3 direction = pt2 - pt1;
+    return glm::normalize(direction);
 }
 
 /**
